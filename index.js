@@ -1,5 +1,8 @@
 import { GraphQLServer, PubSub } from 'graphql-yoga';
 
+const pubsub = new PubSub();
+const NEW_CHAT = 'NEW_CHAT';
+
 let chattingLog = [{
   id: 0,
   writer: 'admin',
@@ -20,6 +23,9 @@ const typeDefs = `
   type Mutation {
     write(writer: String!, description: String!): String!
   }
+  type Subscription {
+    newChat: Chat
+  }
 `;
 
 const resolvers = {
@@ -35,14 +41,21 @@ const resolvers = {
         description
       };
       chattingLog.push(newChat);
+      pubsub.publish(NEW_CHAT, { newChat });
       return 'OK';
+    }
+  },
+  Subscription: {
+    newChat: {
+      subscribe: (root, args, { pubsub }) => pubsub.asyncIterator(NEW_CHAT)
     }
   }
 };
 
 const server = new GraphQLServer({
   typeDefs,
-  resolvers
+  resolvers,
+  context: { pubsub }
 });
 
 server.start(() => console.log('graphQL server start!!'));

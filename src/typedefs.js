@@ -19,8 +19,8 @@ export const typeDefs = `
   }
   
   type Query {
-      chatRooms: [ChatRoom]
-      chatRoom(id: Int!): ChatRoom
+      chatRooms: [ChatRoom]!
+      chatRoom(id: Int!): ChatRoom!
       messages(chatRoomId: Int!): [Message]
       users: [User]
       user(id: Int!): User

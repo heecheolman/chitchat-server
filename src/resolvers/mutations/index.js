@@ -1,7 +1,9 @@
 import { Chat } from '../db';
+import { pubsub } from '../../index';
+import { NEW_CHAT, NEW_CHAT_ROOM } from '../subscription';
 
-const createMessage = ({ chatroomId, userId, content }) => {
-  const targetRoom = Chat.chatrooms.find((chatroom) => chatroom.id === chatroomId);
+const createMessage = ({ chatRoomId, userId, content }) => {
+  const targetRoom = Chat.chatRooms.find((chatRoom) => chatRoom.id === chatRoomId);
   const nextMessageId = targetRoom.messages.length; // 다음 메세지 고유 id
 
   /** message */
@@ -29,22 +31,25 @@ const createUser = (_, { userName }) => {
 };
 
 
-const createChatroom = (_, { userId, title }) => {
-  const chatroom = {
-    id: Chat.chatrooms.length,
+const createChatRoom = (_, { userId, title }) => {
+  const chatRoom = {
+    id: Chat.chatRooms.length,
     title,
     users: [
       { id: userId, userName: 'admin' },
     ],
     messages: []
   };
-
-  Chat.chatrooms.push(chatroom);
-  return chatroom;
+  Chat.chatRooms.push(chatRoom);
+  console.log('pubsub', pubsub);
+  pubsub.publish(NEW_CHAT_ROOM, {
+    chatRoomCreated: chatRoom
+  });
+  return chatRoom;
 };
 
-const joinChatroom = (_, { chatroomId, userId }) => {
-  const targetChatroom = Chat.chatrooms.find((chatroom) => chatroom.id === chatroomId);
+const joinChatRoom = (_, { chatRoomId, userId }) => {
+  const targetChatroom = Chat.chatRooms.find((chatRoom) => chatRoom.id === chatRoomId);
   const joinedChatroom = {
     ...targetChatroom,
     users: [
@@ -56,8 +61,8 @@ const joinChatroom = (_, { chatroomId, userId }) => {
     ]
   };
 
-  Chat.chatrooms = [
-    ...Chat.chatrooms.filter((chatroom) => chatroom.id !== chatroomId),
+  Chat.chatRooms = [
+    ...Chat.chatRooms.filter((chatRoom) => chatRoom.id !== chatRoomId),
     joinedChatroom
   ];
 
@@ -67,6 +72,6 @@ const joinChatroom = (_, { chatroomId, userId }) => {
 export {
   createMessage,
   createUser,
-  createChatroom,
-  joinChatroom
+  createChatRoom,
+  joinChatRoom
 }

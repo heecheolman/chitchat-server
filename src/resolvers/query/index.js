@@ -1,10 +1,10 @@
 import { Chat } from '../db';
 
 /** 채팅방들 */
-const chatrooms = () => Chat.chatrooms;
+const chatRooms = () => Chat.chatRooms;
 
 /** 채팅방 */
-const chatroom = (id) => Chat.chatrooms.find((chatroom) => chatroom.id === id);
+const chatRoom = (id) => Chat.chatRooms.find((chatRoom) => chatRoom.id === id);
 
 /** 유저들 */
 const users = () => Chat.users;
@@ -13,8 +13,8 @@ const users = () => Chat.users;
 const user = (id) => Chat.users.find((user) => user.id === id);
 
 export {
-  chatrooms,
-  chatroom,
+  chatRooms,
+  chatRoom,
   users,
   user
 };

@@ -19,21 +19,22 @@ export const typeDefs = `
   }
   
   type Query {
-      chatrooms: [ChatRoom]
-      chatroom(id: Int!): ChatRoom
-      messages(chatroomId: Int!): [Message]
+      chatRooms: [ChatRoom]
+      chatRoom(id: Int!): ChatRoom
+      messages(chatRoomId: Int!): [Message]
       users: [User]
       user(id: Int!): User
   }
   
   type Mutation {
-      createMessage(chatroomId: Int!, userId: Int!, content: String!): Message!
+      createMessage(chatRoomId: Int!, userId: Int!, content: String!): Message!
       createUser(userName: String!): User!
-      createChatroom(userId: Int!, title: String!): ChatRoom!
-      joinChatroom(chatroomId: Int!, userId: Int!): ChatRoom!
+      createChatRoom(userId: Int!, title: String!): ChatRoom!
+      joinChatRoom(chatRoomId: Int!, userId: Int!): ChatRoom!
   }
   
   type Subscription {
-      messageCreated(chatroomId: Int!): Message
+      messageCreated(chatRoomId: Int!): Message
+      chatRoomCreated: ChatRoom
   }
 `;

@@ -26,11 +26,14 @@ type Query {
 }
 
 type Mutation {
-    addMessage(chatroomId: Int!, userId: Int!, content: String!): Message
+    createMessage(chatroomId: Int!, userId: Int!, content: String!): Message!
+    createUser(userName: String!): User!
+    createChatroom(userId: Int!, title: String!): ChatRoom!
+    joinChatroom(chatroomId: Int!, userId: Int!): ChatRoom!
 }
 
 type Subscription {
-    messageAdded(chatroomId: Int!): Message
+    messageCreated(chatroomId: Int!): Message
 }
 
 schema {

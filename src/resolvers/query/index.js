@@ -4,17 +4,20 @@ import { Chat } from '../db';
 const chatRooms = () => Chat.chatRooms;
 
 /** 채팅방 */
-const chatRoom = (id) => Chat.chatRooms.find((chatRoom) => chatRoom.id === id);
+const chatRoom = (obj, { id }, context) => Chat.chatRooms.find((chatRoom) => chatRoom.id === id);
 
 /** 유저들 */
 const users = () => Chat.users;
 
 /** 유저 */
-const user = (id) => Chat.users.find((user) => user.id === id);
+const user = (obj, { id }, context) => Chat.users.find((user) => user.id === id);
+
+const messages = (obj, { chatRoomId }, context) => Chat.chatRooms.find(chatRoom => chatRoom.id === chatRoomId).messages;
 
 export {
   chatRooms,
   chatRoom,
   users,
-  user
+  user,
+  messages
 };

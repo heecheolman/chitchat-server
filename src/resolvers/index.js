@@ -1,4 +1,4 @@
-import { chatRooms, chatRoom, users, user } from './query';
+import { chatRooms, chatRoom, users, user, messages } from './query';
 import { createMessage, createUser, createChatRoom, joinChatRoom } from './mutations';
 import { messageCreated, chatRoomCreated } from './subscription';
 
@@ -7,7 +7,8 @@ export const resolvers = {
     chatRooms,
     chatRoom,
     users,
-    user
+    user,
+    messages
   },
   Mutation: {
     createMessage,

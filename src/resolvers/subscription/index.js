@@ -6,7 +6,5 @@ export const messageCreated = {
 };
 
 export const chatRoomCreated = {
-  subscribe: (root, args, { pubsub }) => {
-    return pubsub.asyncIterator(NEW_CHAT_ROOM)
-  }
+  subscribe: (root, args, { pubsub }) => pubsub.asyncIterator(NEW_CHAT_ROOM)
 };

@@ -50,7 +50,6 @@ const createChatRoom = (_, { userId, title }) => {
     messages: []
   };
   Chat.chatRooms.push(chatRoom);
-  console.log('createChatRoom :: ');
   pubsub.publish(NEW_CHAT_ROOM, {
     chatRoomCreated: chatRoom
   });

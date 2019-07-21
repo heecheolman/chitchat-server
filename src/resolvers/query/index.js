@@ -12,7 +12,13 @@ const users = () => Chat.users;
 /** 유저 */
 const user = (obj, { id }, context) => Chat.users.find((user) => user.id === id);
 
-const messages = (obj, { chatRoomId }, context) => Chat.chatRooms.find(chatRoom => chatRoom.id === chatRoomId).messages;
+const messages = (obj, { chatRoomId }, context) => {
+  const foundChatRoom = Chat.chatRooms.find(chatRoom => chatRoom.id === chatRoomId);
+  if (!foundChatRoom) {
+    return [];
+  }
+  return foundChatRoom.messages;
+};
 
 export {
   chatRooms,

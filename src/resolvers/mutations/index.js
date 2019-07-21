@@ -6,7 +6,6 @@ const topicManager = new TopicManager();
 
 const createMessage = (_, { chatRoomId, userId, content }) => {
   const targetRoom = Chat.chatRooms.find((chatRoom) => chatRoom.id === chatRoomId);
-  console.log('targetRoom :: ', targetRoom);
   const nextMessageId = targetRoom.messages.length; // 다음 메세지 고유 id
 
   // 작성한 유저 찾기
@@ -24,9 +23,6 @@ const createMessage = (_, { chatRoomId, userId, content }) => {
   };
 
   targetRoom.messages.push(newMessage);
-
-  console.log('pubsub publish at', topicManager.getTopicNewChat(chatRoomId));
-  console.log('createMesssage topickManager', topicManager._topics);
 
   pubsub.publish(topicManager.getTopicNewChat(chatRoomId), {
     messageCreated: newMessage

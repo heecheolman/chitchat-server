@@ -42,10 +42,11 @@ const createUser = (_, { userName }) => {
 };
 
 
-const createChatRoom = (_, { userId, title }) => {
+const createChatRoom = (_, { userId, title, description }) => {
   const chatRoom = {
     id: Chat.chatRooms.length,
     title,
+    description,
     users: [
       { id: userId, userName: 'admin' },
     ],

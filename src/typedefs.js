@@ -14,6 +14,7 @@ export const typeDefs = `
   type ChatRoom {
       id: Int!
       title: String!
+      description: String!
       users: [User]!
       messages: [Message]!
   }
@@ -29,7 +30,7 @@ export const typeDefs = `
   type Mutation {
       createMessage(chatRoomId: Int!, userId: Int!, content: String!): Message!
       createUser(userName: String!): User!
-      createChatRoom(userId: Int!, title: String!): ChatRoom!
+      createChatRoom(userId: Int!, title: String!, description: String!): ChatRoom!
       joinChatRoom(chatRoomId: Int!, userId: Int!): ChatRoom!
   }
   

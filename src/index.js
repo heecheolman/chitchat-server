@@ -7,7 +7,7 @@ export const pubsub = new PubSub();
 const server = new GraphQLServer({
   typeDefs,
   resolvers,
-  context: { pubsub }
+  context: { pubsub },
 });
 
 server.start(() => console.log('graphQL server start!!'));

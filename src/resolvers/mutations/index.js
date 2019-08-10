@@ -47,9 +47,7 @@ const createChatRoom = (_, { userId, title, description }) => {
     id: Chat.chatRooms.length,
     title,
     description,
-    users: [
-      { id: userId, userName: 'admin' },
-    ],
+    users: [],
     messages: []
   };
   Chat.chatRooms.push(chatRoom);

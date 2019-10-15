@@ -35,6 +35,7 @@ export const typeDefs = `
   }
   
   type Subscription {
+      chatRoomInfo(chatRoomId: Int!): ChatRoom
       messageCreated(chatRoomId: Int!): Message
       chatRoomCreated: ChatRoom
   }

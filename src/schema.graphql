@@ -31,9 +31,11 @@ type Mutation {
     createUser(userName: String!): User!
     createChatRoom(userId: Int!, title: String!, description: String!): ChatRoom!
     joinChatRoom(chatRoomId: Int!, userId: Int!): ChatRoom!
+    exitChatRoom(chatRoomId: Int!, userId: Int!): ChatRoom!
 }
 
 type Subscription {
+    chatRoomInfo(chatRoomId: Int!): ChatRoom
     messageCreated(chatRoomId: Int!): Message
     chatRoomCreated: ChatRoom
 }

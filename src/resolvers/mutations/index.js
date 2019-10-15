@@ -25,7 +25,7 @@ const createMessage = (_, { chatRoomId, userId, content }) => {
   targetRoom.messages.push(newMessage);
 
   pubsub.publish(topicManager.getTopicNewChat(chatRoomId), {
-    messageCreated: newMessage
+    chatRoomInfo: targetRoom
   });
 
   return newMessage;
@@ -58,24 +58,38 @@ const createChatRoom = (_, { userId, title, description }) => {
 };
 
 const joinChatRoom = (_, { chatRoomId, userId }) => {
-  const targetChatroom = Chat.chatRooms.find((chatRoom) => chatRoom.id === chatRoomId);
-  const joinedChatroom = {
-    ...targetChatroom,
+  const targetChatRoom = Chat.chatRooms.find((chatRoom) => chatRoom.id === chatRoomId);
+  const targetUser = Chat.users.find((user) => user.id === userId);
+  const joinedChatRoom = {
+    ...targetChatRoom,
     users: [
-      ...targetChatroom.users,
-      { id: userId, userName: 'you' },
+      ...targetChatRoom.users,
+      targetUser,
     ],
     messages: [
-      ...targetChatroom.messages
+      ...targetChatRoom.messages
     ]
   };
 
   Chat.chatRooms = [
     ...Chat.chatRooms.filter((chatRoom) => chatRoom.id !== chatRoomId),
-    joinedChatroom
+    joinedChatRoom
   ];
 
-  return joinedChatroom;
+  pubsub.publish(topicManager.getTopicNewChat(chatRoomId), {
+    chatRoomInfo: joinedChatRoom,
+  });
+  console.log(joinedChatRoom);
+
+  return joinedChatRoom;
+};
+
+const exitChatRoom = (_, { chatRoomId, userId }) => {
+  const targetChatRoom = Chat.chatRooms.find((chatRoom) => chatRoom.id === chatRoomId);
+  const targetUser = Chat.users.find((user) => user.id === userId);
+  const exitChatRoom = {
+
+  }
 };
 
 export {
